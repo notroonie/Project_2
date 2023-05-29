@@ -1,0 +1,56 @@
+open cloudera
+
+1. type hive 
+2. create tables
+
+create table customer_info (cust_id int,cust_name string,order_id int) ROW FORMAT DELIMITED FIELDS TERMINATED BY ',' STORED AS TEXTFILE;
+
+CREATE TABLE order_info (order_id int,itemid int,quantity int) ROW FORMAT DELIMITED FIELDS TERMINATED BY ',' STORED AS TEXTFILE;
+
+CREATE TABLE item_info(itemid int,item_name string,itemprice int) ROW FORMAT DELIMITED FIELDS TERMINATED BY ',' STORED AS TEXTFILE;
+
+3. in cloudera crate a folter and in that folder create 3 tables customer
+order and  ADD DATA TO IT ALSOitem then load them into this 
+
+LOAD DATA LOCAL INPATH '/home/cloudera/customer' into table customer_info; 
+LOAD DATA LOCAL INPATH '/home/cloudera/order' into table order_info; 
+LOAD DATA LOCAL INPATH '/home/cloudera/item' into table item_info;
+
+4. select * from item_info;
+select * from order_info;
+select * from customer_info;
+
+5.Perform Join tables with Hive
+select * from customer_info join  order_info on customer_info.order_id=order_info.order_id join item_info on order_info.itemid=item_info.itemid;
+
+6. Create Index on Customer information system in Hive
+create index data_index on table customer_info(cust_id) as 'org.apache.hadoop.hive.ql.index.compact.CompactIndexHandler' with deferred rebuild;
+
+7.Find the total, average sales in Hive
+select sum(quantity*itemprice) from order_info join item_info on order_info.itemid=item_info.itemid;
+select avg(quantity*itemprice) from order_info join item_info on order_info.itemid=item_info.itemid;
+
+8.  Find Order details with maximum cost.
+select max(quantity*itemprice) from order_info join item_info on order_info.itemid=item_info.itemid;
+
+9.Creating an external Hive table to connect to the HBase for Customer Information 
+System.
+
+create external table ext_table(id int,name string,oid int)
+    > stored by 'org.apache.hadoop.hive.hbase.HBaseStorageHandler'
+    > with SERDEPROPERTIES("hbase.columns.mapping"=":key,customer:cust_name,customer:cust_id")
+    > TBLPROPERTIES("hbase.table.name"="custinfo");
+
+
+10.select * from ext_table;
+
+11.press ctr c 
+exit from hive 
+put hbase shell in cmd
+create 'custinfo','customer'
+put 'custinfo',1,'customer:cust_name','vaish'
+put 'custinfo',1,'customer:order_id',456
+put 'custinfo',2,'customer:cust_name','gauri'
+put 'custinfo',2,'customer:order_id',678
+
+scan 'custinfo'
