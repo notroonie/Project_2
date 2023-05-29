@@ -1,0 +1,130 @@
+import libraries :  
+import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
+import seaborn as sns
+
+df.columns : shows all columns 
+
+name columns/ agar name nahi ho column ko
+df.columns = ['colname','colname','colname','colname','colname'] 
+
+df.dtypes : shows all data types
+df.describe() : shows count mean std 25 50 75 percent of data 
+df.shape : prints the rows and columns
+
+df1 = df.rename(columns={'oldcolname ': 'newcol name'}) : renaming column
+
+Counting values in each column:
+df["colname"].value_counts() ->normal
+
+function wala:
+for i in df:
+    print(df[i].value_counts()) 
+
+
+## DATA PREPROCESSING ####
+null values
+df.isnull().sum() 
+
+Filling Null Values : 
+mean = df['colname'].mean()
+df['colname'].fillna(mean, inplace = True)
+
+Dropping null values:
+df1 = df.dropna()
+
+Dropping "?" charecters 
+by function 
+for i in df:
+    df=df.drop(df[df[i]=="?"].index)
+
+normal 
+df1 = df.drop(df[df["col name"]=="?"].index , axis =0 )
+
+
+
+
+##### Data Outliers ########
+
+1. check for outliers : we do this by box plot box plot ke bhar ke points are outliers
+ 
+sns.boxplot(data = [df["col1"],df["col2"],df["col3"]])
+
+2. all the columns with outliers store it in new df 
+
+df_out = df.iloc[:,[0,4,5,9]] => column numbers 
+
+3.use iqr function to detect and get upper limit lower limit
+
+# detect outliers 
+
+for i in df_out:
+    percen_25 = df[i].quantile(0.25)
+    percen_75 = df[i].quantile(0.75)
+    iqr = percen_75-percen_25
+    ul= percen_75+1.5*iqr
+    ll= percen_25-1.5*iqr
+    
+    print(i,percen_25,percen_75,"iqr:",iqr , "upper",ul,"lower",ll)
+
+==> here you will get outcome for each column with their upper and lower limit
+    
+
+4 . now set the upper limit and lower limit values 
+
+df1 =df_out[df_out['col name'] > upplerlimit] 
+df2 =df_out[df_out['col name'] < lowerlimit] 
+dfnew = pd.concat([df_1,df_2],axis=1)
+dfnew
+dfnew.shape => values should be reduced 
+
+dfnew.index
+=>this will give index and store this index for all 
+
+repeat all the steps for number of outlies
+
+5. finally drop all outliers by their index(drop from main df and store in final)
+df_final=df.drop({paste all index})
+
+6. check shape : it should be reduced
+df_final.shape
+
+
+###### Model Building ####################
+1. import packages : 
+
+from sklearn.model_selection import train_test_split
+from sklearn.linear_model import LogisticRegression
+from sklearn.naive_bayes import GaussianNB
+from sklearn.metrics import accuracy_score
+
+2. X = df.drop('col of classifier',axis=1) => drop the classifier col and keep the rst
+   Y = df["col of classifier"] => keep the classifier
+
+3. fit data in train test
+X_train, X_test, y_train, y_test = train_test_split(X,Y,test_size=0.3,random_state=42)
+
+4. Build regression
+reg = LogisticRegression()
+reg.fit(X_train,y_train)
+reg_pred = reg.predict(X_test)
+print("Accuracy of Regression: ",accuracy_score(y_test,reg_pred))
+
+
+5. Build Naive bayes 
+navie = GaussianNB()
+navie.fit(X_train,y_train)
+navie_pred = navie.predict(X_test)
+print("Accuracy of NavieBayes: ",accuracy_score(y_test,navie_pred))
+
+output : check dono ki accuracy
+
+
+
+heat map 
+correleation = select_df.corr()
+sns.heatmap(correleation, annot=True)
+plt.title('title')
+plt.show()
+

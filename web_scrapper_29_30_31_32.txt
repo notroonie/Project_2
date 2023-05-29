@@ -1,0 +1,37 @@
+import libraries : 
+
+import requests
+import bs4
+
+!pip install requests
+!pip install beautifulsoup4
+
+request1 = requests.get("url link")
+responce check 
+request1 
+==> output <Response [200]>
+request1.content
+soup = bs4.BeautifulSoup(request1.text)
+soup
+
+review = soup.findAll("div",{
+    'class' : 'class name '
+});
+for i in review:
+    print(i.get_text()+"\n\n")
+
+skeleten : 
+
+review = soup.findAll("tag name",{
+    'class' : 'class name'
+});
+for i in review:
+    print(i.get_text()+"\n\n")
+
+
+
+url links : 
+32 . https://www.flipkart.com/duas-d116-plus-bluetooth-fitness-smart-watch-men-women-kids-activity-tracker-smartwatch/p/itm5f5d010f23760?pid=SMWGHYN8UHWPZZE3&lid=LSTSMWGHYN8UHWPZZE3TMOWFJ&marketplace=FLIPKART&store=ajy%2Fbuh&srno=b_1_1&otracker=browse&fm=organic&iid=en_bBJIx2AVOC1KlgsMfhG%2FTO7ZIAxusi0yGUG5ig2zgM%2FCVCsFHSz9%2BZ7QCWUnp3duyvWUhyaRMK1zH0CUmJOf%2Fw%3D%3D&ppt=None&ppn=None&ssid=2lfswq3dmo0000001685398475691
+30 . https://www.flipkart.com/mobiles/oneplus~brand/pr?sid=tyy,4io
+29 . https://www.flipkart.com/amazon-echo-dot/p/itmf4mrkfyyfx3tr
+31 . https://www.flipkart.com/apple-airpods-pro-2nd-generation-bluetooth-headset/p/itmbfc083335b35c?pid=ACCGHWWGAAZDXNR2&lid=LSTACCGHWWGAAZDXNR2RMRPVQ&marketplace=FLIPKART&q=ear+pods+&store=0pm%2Ffcn%2F821%2Fa7x%2F2si&srno=s_1_1&otracker=search&otracker1=search&fm=Search&iid=51503a5c-0b5d-4365-82e3-a4736b8b74c4.ACCGHWWGAAZDXNR2.SEARCH&ppt=sp&ppn=sp&ssid=a3mnmoy0ts0000001685301875355&qH=85681393318aea0a
