@@ -1,0 +1,93 @@
+import libraries :  
+import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
+import seaborn as sns
+
+df.columns : shows all columns 
+
+name columns/ agar name nahi ho column ko
+df.columns = ['colname','colname','colname','colname','colname'] 
+
+df.dtypes : shows all data types
+df.describe() : shows count mean std 25 50 75 percent of data 
+df.shape : prints the rows and columns
+
+df1 = df.rename(columns={'oldcolname ': 'newcol name'}) : renaming column
+
+Counting values in each column:
+df["colname"].value_counts() ->normal
+
+function wala:
+for i in df:
+    print(df[i].value_counts()) 
+
+
+## DATA PREPROCESSING ####
+null values
+df.isnull().sum() 
+
+Filling Null Values : 
+mean = df['colname'].mean()
+df['colname'].fillna(mean, inplace = True)
+
+Dropping null values:
+df1 = df.dropna()
+
+Dropping "?" charecters 
+by function 
+for i in df:
+    df=df.drop(df[df[i]=="?"].index)
+
+normal 
+df1 = df.drop(df[df["col name"]=="?"].index , axis =0 )
+
+### Creating Subset ########
+first choose a column that you want to create subset on
+then do value counts of it and get the possible attributes
+then for every attribute make a subset 
+
+df_attr=df[df["colname"]=="attr1"]
+df_attr2=df[df["colname"]=="attr2"]
+df_attr3=df[df["colname"]=="attr3"]
+
+##### Merging Subset #########
+df_merge = pd.concat([subset1,subset2])
+
+
+####Sorting data ######
+df_sort = df.sort_values(by=["colname"],ascending = True) asc
+df_sort = df.sort_values(by=["colname"],ascending = False) desc
+
+#### Transposing Data ######
+df_transpose = df.transpose()
+
+
+#### Casting Data #########
+first choose a column that you want to melt 
+yeh do column aise hone chaiye ki inka value count kam hao 
+that is less atributes wala
+
+pivot_table = pd.pivot_table(selective_df,index= ['Col1','Col2'])
+
+### Melting Data to long format ##
+first choose a column that you want to melt 
+yeh do column aise hone chaiye ki inka value count kam hao 
+that is less atributes wala
+
+df_melted =pd.melt(df,id_vars=['Colname','Colname'],value_name='count',var_name='reach')
+
+here use main df 
+
+use this if they ask to sepratly melt columns
+df_melted = pd.melt(df, id_vars='index',  value_vars='col name') 
+
+
+
+For problem statement 
+11 : use original_language column for making subset
+12 : make 2 subset of male and female and 4 or race 
+24 : use area as column to dive it into subset
+notAffected = df1[df1['area']==0] -- subset1
+mostlyAffected = df1[df1['area'] > 13 ] -- subset2
+partiallyAffected = df1[(df1['area']  <= 13 ) & (df1['area']  > 0 )  ] --subset3
