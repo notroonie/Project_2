@@ -1,7 +1,4 @@
-use online movie mai ratings_small dataset and send it to hadoop
-
-to convert xls to csv go to xel sheet click on export select csv export
-
+use online movie rating small dataset and send it to hadoop
 // Isme when you copy the dataset from linux to hadoop...make sure that u delete the column names...
 // if column names are not deleted then you will face an error "NumberFormatException"
 
@@ -16,9 +13,15 @@ Right Click on Project > Build Path> Add External
 after putting code 
 export
 1. Right Click on Project> Export> Select export destination as Jar File  > next> Finish.
-2. create a text file >> wordcountFile.txt {enteries : Train,tRAin,Bus,BIKE,BiKe}
+2. import music dataset >>Movie >> ratingsmall
 
 
+
+open terminal 
+hadoop fs -put ratingsmall.csv wc
+hadoop jar ps1_wcjar.jar pack.myclass wc dirw1
+hadoop fs -ls dirw1
+hadoop fs -cat dirw1/part-r-00000
 
 open terminal 
 hadoop fs -put wordcountFile.txt wc
