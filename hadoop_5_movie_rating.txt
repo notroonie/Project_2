@@ -1,4 +1,7 @@
-use online retail dataset and send it to hadoop
+use online movie mai ratings_small dataset and send it to hadoop
+
+to convert xls to csv go to xel sheet click on export select csv export
+
 // Isme when you copy the dataset from linux to hadoop...make sure that u delete the column names...
 // if column names are not deleted then you will face an error "NumberFormatException"
 
